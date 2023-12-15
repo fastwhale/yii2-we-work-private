@@ -1,8 +1,8 @@
 {
-    "name": "fastwhale/yii2-we-work",
-    "description": "Yii2 wechat work SDK",
+    "name": "fastwhale/yii2-we-work-private",
+    "description": "Yii2 private wechat work SDK",
     "type": "yii2-extension",
-    "keywords": ["yii2","extension","we","work","wechat","weWork","企业微信"],
+    "keywords": ["yii2","extension","we","work","wechat","weWork","企业微信", "private"],
     "license": "MIT",
     "authors": [
         {
