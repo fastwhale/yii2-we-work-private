@@ -1,0 +1,22 @@
+{
+    "name": "fastwhale/yii2-we-work",
+    "description": "Yii2 wechat work SDK",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","we","work","wechat","weWork","企业微信"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fast Whale",
+            "email": "op@mail.pigcms.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "fastwhale\\yii2\\weWork\\": ""
+        }
+    }
+}
