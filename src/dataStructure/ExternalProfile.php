@@ -29,7 +29,7 @@
 				$externalProfile->external_corp_name = $externalCorpName;
 			}
 
-			$externalAttr = Utils::arrayGet($arr, "external_attr");
+			$externalAttr = Utils::arrayGet($arr, "external_attr", []);
 			if (!is_null($externalAttr) && !empty($externalAttr)) {
 				$externalProfile->external_attr = [];
 				foreach ($externalAttr as $attr) {
@@ -37,7 +37,7 @@
 				}
 			}
 
-			$wechatChannels = Utils::arrayGet($arr, "wechat_channels");
+			$wechatChannels = Utils::arrayGet($arr, "wechat_channels", []);
 			if (!is_null($wechatChannels) && !empty($wechatChannels)) {
 				$externalProfile->wechat_channels = [
 					'nickname' => Utils::arrayGet($wechatChannels, 'nickname'),

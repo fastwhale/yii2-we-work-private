@@ -7,7 +7,7 @@
 	use fastwhale\yii2\weWork\components\Utils;
 
 	/**
-	 * Class User
+	 * Class User todo 与私有化接口字段不一致
 	 *
 	 * @property string     userid              成员UserID。对应管理端的帐号，企业内必须唯一。不区分大小写，长度为1~64个字节。只能由数字、字母和“_-@.”四种字符组成，且第一个字符必须是数字或字母。
 	 * @property string     name                成员名称。长度为1~64个utf8字符
@@ -33,6 +33,8 @@
 	 * @property array      external_profile    成员对外属性，字段详情见对外属性
 	 * @property string     external_position   对外职务，如果设置了该值，则以此作为对外展示的职务，否则以position来展示。长度12个汉字内
 	 * @property string     address             地址。长度最大128个字符
+	 * @property string     positions           职位信息，多部门多职位，跟随部门
+	 * @property string     country_code        手机区号
 	 *
 	 * @package fastwhale\yii2\weWork\src\dataStructure
 	 */
@@ -49,17 +51,18 @@
 
 			$user->userid            = Utils::arrayGet($arr, 'userid');
 			$user->name              = Utils::arrayGet($arr, 'name');
-			$user->alias             = Utils::arrayGet($arr, 'alias');
+			$user->alias             = Utils::arrayGet($arr, 'alias', '');
 			$user->mobile            = Utils::arrayGet($arr, 'mobile');
 			$user->department        = Utils::arrayGet($arr, 'department');
 			$user->order             = Utils::arrayGet($arr, 'order');
 			$user->position          = Utils::arrayGet($arr, 'position');
+			$user->positions         = Utils::arrayGet($arr, 'positions');
 			$user->gender            = Utils::arrayGet($arr, 'gender');
 			$user->email             = Utils::arrayGet($arr, 'email');
 			$user->telephone         = Utils::arrayGet($arr, 'telephone');
 			$user->is_leader_in_dept = Utils::arrayGet($arr, 'is_leader_in_dept');
 			$user->avatar            = Utils::arrayGet($arr, 'avatar');
-			$user->thumb_avatar      = Utils::arrayGet($arr, 'thumb_avatar');
+			$user->thumb_avatar      = Utils::arrayGet($arr, 'thumb_avatar', '');
 			$user->avatar_mediaid    = Utils::arrayGet($arr, 'avatar_mediaid');
 			$user->enable            = Utils::arrayGet($arr, 'enable');
 			$user->hide_mobile       = Utils::arrayGet($arr, 'hide_mobile');
@@ -77,8 +80,9 @@
 				$user->external_profile = ExternalProfile::parseFromArray(Utils::arrayGet($arr, 'external_profile'));
 			}
 
-			$user->external_position = Utils::arrayGet($arr, 'external_position');
-			$user->address           = Utils::arrayGet($arr, 'address');
+			$user->external_position = Utils::arrayGet($arr, 'external_position', '');
+			$user->address           = Utils::arrayGet($arr, 'address', '');
+			$user->country_code      = Utils::arrayGet($arr, 'country_code', '');
 
 			return $user;
 		}

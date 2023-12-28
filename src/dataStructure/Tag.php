@@ -7,7 +7,7 @@
 	use fastwhale\yii2\weWork\components\Utils;
 
 	/**
-	 * Class Tags
+	 * Class Tags todo 与私有化接口字段不一致
 	 *
 	 * @property int    $tagid      标签id，非负整型，指定此参数时新增的标签会生成对应的标签id，不指定时则以目前最大的id自增。
 	 * @property string $tagname    标签名称，长度限制为32个字以内（汉字或英文字母），标签名不可与其他标签重名。
@@ -28,7 +28,7 @@
 			$tag = new Tag();
 
 			$tag->tagid   = Utils::arrayGet($arr, "tagid");
-			$tag->tagname = Utils::arrayGet($arr, "tagname");
+			$tag->tagname = Utils::arrayGet($arr, "tagname", '');
 
 			$userListArr = Utils::arrayGet($arr, "userlist");
 			if (!is_null($userListArr)) {
