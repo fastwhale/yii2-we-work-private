@@ -975,6 +975,13 @@
 			return $this->repJson;
 		}
 
+		public function ECScheduleUpdate ($params)
+		{
+			self::_HttpCall(self::OA_SCHEDULE_UPDATE, 'POST', $params);
+
+			return $this->repJson;
+		}
+
 		public function ECAddJoinWay ($params)
 		{
 			self::_HttpCall(self::ADD_JOIN_WAY, 'POST', $params);
@@ -1195,6 +1202,43 @@
 			self::_HttpCall(self::MEDIA_UPLOAD . '&type=' . $type, 'POST', $args, true, true);
 
 			return $this->repJson["media_id"];
+		}
+
+		/*异步上传临时素材*/
+		public function MediaUploadByUrl ($filePath, $filename, $url, $scene = 0, $type = 'file')
+		{
+			Utils::checkNotEmptyStr($filePath, "filePath");
+			Utils::checkNotEmptyStr($filename, "filename");
+			Utils::checkNotEmptyStr($url, "url");
+
+			if (file_exists($filePath)) {
+				$md5 = md5_file($filePath);
+			} else {
+				throw new \QyApiError("file not exists");
+			}
+			$args = [
+				'scene'    => $scene,
+				'type'     => $type,
+				'filename' => $filename,
+				'url'      => $url,
+				'md5'      => $md5,
+			];
+			var_dump($args);
+			self::_HttpCall(self::MEDIA_UPLOAD_BY_URL, 'POST', $args, true);
+
+			return $this->repJson["jobid"];
+		}
+
+		/*获取异步上传素材文件结果*/
+		public function MediaGetUploadByUrlResult ($jobid)
+		{
+			Utils::checkNotEmptyStr($jobid, "jobid");
+			$args = [
+				'jobid' => $jobid
+			];
+			self::_HttpCall(self::MEDIA_GET_UPLOAD_BY_URL_RESULT, 'POST', $args, true);
+
+			return $this->repJson;
 		}
 
 		/* 附件管理 */
@@ -2232,21 +2276,6 @@
 			return $this->repJson;
 		}
 
-		public function unionidToExternalUserid ($unionid, $openid, $subject_type = 0)
-		{
-			Utils::checkNotEmptyStr($unionid, "unionid");
-			Utils::checkNotEmptyStr($openid, "openid");
-
-			$args = [
-				'unionid'      => $unionid,
-				'openid'       => $openid,
-				'subject_type' => $subject_type,
-			];
-			self::_HttpCall(self::UNIONID_TO_EXTERNAL_USERID, 'POST', $args);
-
-			return $this->repJson;
-		}
-
 		/* 创建获客链接 */
 		public function ECAddCustomerAcquisition ($message)
 		{
@@ -2318,6 +2347,117 @@
 			Utils::checkNotEmptyStr($endtime, 'endtime');
 			Utils::checkNotEmptyArray($useridlist, 'useridlist');
 			self::_HttpCall(self::GETCHECKINDAYDATA, 'POST', ['starttime' => $starttime, 'endtime' => $endtime, 'useridlist' => $useridlist]);
+
+			return $this->repJson;
+		}
+
+		public function unionidToExternalUserid ($unionid, $openid, $subject_type = 0)
+		{
+			Utils::checkNotEmptyStr($unionid, "unionid");
+			Utils::checkNotEmptyStr($openid, "openid");
+
+			$args = [
+				'unionid'      => $unionid,
+				'openid'       => $openid,
+				'subject_type' => $subject_type,
+			];
+			self::_HttpCall(self::UNIONID_TO_EXTERNAL_USERID, 'POST', $args);
+
+			return $this->repJson;
+		}
+
+		/* 创建预约会议*/
+		public function ECMeetingCreate ($data)
+		{
+			self::_HttpCall(self::MEETING_CREATE, 'POST', $data);
+
+			return $this->repJson;
+		}
+
+		/* 修改预约会议 */
+		public function ECMeetingUpdate ($data)
+		{
+			self::_HttpCall(self::MEETING_UPDATE, 'POST', $data);
+
+			return $this->repJson;
+		}
+
+		/* 取消预约会议 */
+		public function ECMeetingCancel ($data)
+		{
+			self::_HttpCall(self::MEETING_CANCEL, 'POST', $data);
+
+			return $this->repJson;
+		}
+
+		/* 获取会议详情 */
+		public function ECGetMeetingInfo ($data)
+		{
+			self::_HttpCall(self::GET_MEETING_INFO, 'POST', $data);
+
+			return $this->repJson;
+		}
+
+		/* 获取成员会议ID列表 */
+		public function ECGetUserMeetingId ($data)
+		{
+			self::_HttpCall(self::GET_USER_MEETING_ID, 'POST', $data);
+
+			return $this->repJson;
+		}
+
+		/* 服务商会话存档  设置公钥 */
+		public function SetPublicKey ($data)
+		{
+			self::_HttpCall(self::SET_PUBLIC_KEY, 'POST', $data);
+
+			return $this->repJson;
+		}
+
+		/* 服务商会话存档 获取授权存档的成员列表 */
+		public function GetAuthUserList ($data)
+		{
+			self::_HttpCall(self::GET_AUTH_USER_LIST, 'POST', $data);
+
+			return $this->repJson;
+		}
+
+		/* 服务商会话存档 设置专区接收回调事件 */
+		public function SetReceiveCallback ($data)
+		{
+			self::_HttpCall(self::SET_RECEIVE_CALLBACK, 'POST', $data);
+
+			return $this->repJson;
+		}
+
+		/* 服务商会话存档  应用同步调用专区程序 */
+		public function SyncCallProgram ($data)
+		{
+			self::_HttpCall(self::SYNC_CALL_PROGRAM, 'POST', $data);
+
+			return $this->repJson;
+		}
+
+		/* 服务商会话存档  创建专区程序调用任务 */
+		public function AsyncCallProgram ($data)
+		{
+			self::_HttpCall(self::ASYNC_CALL_PROGRAM, 'POST', $data);
+
+			return $this->repJson;
+		}
+
+		/* 服务商会话存档  获取专区程序任务结果 */
+		public function AsyncProgramResult ($data)
+		{
+			self::_HttpCall(self::ASYNC_PROGRAM_RESULT, 'POST', $data);
+
+			return $this->repJson;
+		}
+
+		/* 获取应用权限详情 代开发自建应用/第三方应用 */
+		public function GetPermissions ($data)
+		{
+			self::_HttpCall(self::GET_PERMISSIONS, 'POST', $data);
 
 			return $this->repJson;
 		}
